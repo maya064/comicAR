@@ -9,12 +9,19 @@
 <body>
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
         <a-camera gps-new-camera='gpsMinDistance: 5'></a-camera>
-        <a-entity
+        <!-- <a-entity
             gps-new-entity-place="latitude: 35.77059322291083; longitude: 139.666390131389"
             rotation="0 0 0"
-            gltf-model="src: ./src/miku.glb;"
+            gltf-model="src: miku.glb;"
             animation-mixer="clip: *; timeScale:1"  id="vrmChara">
-        </a-entity>
+        </a-entity> -->
+        <a-assets timeout="10000">
+            <a-asset-item id="miku" src="miku.glb"></a-asset-item>
+        </a-assets>
+        <a-gltf-model src="#miku"
+            gps-new-entity-place="latitude: 35.77059322291083; longitude: 139.666390131389"
+            rotation="0 0 0"
+            animation-mixer="clip: *; timeScale:1"></a-gltf-model>
         <!-- <a-box color="red" gps-new-entity-place="latitude: 35.77059322291083; longitude: 139.666390131389" depth="10" height="10" width="10"></a-box> -->
     </a-scene>
     <script>
