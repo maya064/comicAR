@@ -1,204 +1,33 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <title>AR</title>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <style>
-            /* #viewer {
-                display: none;
-            } */
-            #header {
-                display: flex;
-                flex-direction: row;
-            }
-
-            html {
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-            }
-
-            /* 背景用*/
-            body {
-                padding: 10px;
-                background: #ffffff;
-                
-                background-image: url('./src/bgL.png'),url('./src/bgR.png');
-                background-position: left 0px , right 0px ;
-                background-repeat: no-repeat, no-repeat;
-                background-size: 50vh 100vh;
-
-            }
-
-            #ar-button {
-                position: fixed;
-                bottom: 5%;
-                left: 10%;
-                right: 10%;
-            }
-            .btn {
-                border-radius: 100vh;
-                font-weight: 1000;
-                line-height: 1;
-                padding: 1rem 2rem;
-                cursor: pointer;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                -webkit-transition: all 0.3s;
-                transition: all 0.3s;
-                text-align: left;
-                vertical-align: middle;
-                text-decoration: none;
-                letter-spacing: 0.1em;
-                color: #212529;
-                border-radius: 0.5rem;
-                display: flex;
-                flex-direction: row;
-            }
-            
-            #creators {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .x_profile_icon {
-                border-radius:50%;
-                width: 30%;
-            }
-            .profile {
-                width: 100%;
-                border: 3px dashed #aaa;
-                margin: 1em;
-                border-radius: 15px;
-
-                display: flex;
-                flex-direction: row;
-            }
-            .profile-contents {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .btn-gradient {
-                font-size: 2rem;
-                color: #212529;
-                border-radius: 100vh;
-                background-image: -webkit-linear-gradient(110deg, #e9defa 0%, #fbfcdb 100%);
-                background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
-                -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-                box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-            }
-            .btn-gradient:hover {
-                -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
-                box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
-            }
-            .btn-icon {
-                width:25%;
-            }
-
-            .sns-link-banner {
-                background-color: #212529;
-            }
-            .sns-link-banner span {
-                color: #fff;
-            }
-        </style>
+        <title>Base AR</title>    
+        <script type='text/javascript' src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+        <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+        <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+        <script type='text/javascript' src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     </head>
     <body>
-        <script src='https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js'></script>
-        <script>
-            // import WebXRPolyfill from 'webxr-polyfill';
-            const polyfill = new WebXRPolyfill();
-            console.log(polyfill);
-        </script>
-        <model-viewer
-            id="viewer"
-            ar
-            ar-modes="webxr"
-            src="./src/miku.glb"
-            ios-src="./src/miku.usdz"
-            alt="miku"
-            animation-name="サラマンダー モーション(short)_bone"
-            autoplay
-            ar-scale="fixed"
-            ar-placement="floor"
-        ></model-viewer>
-
-        <!-- ヘッダー -->
-        <div id="header">
-            <h1>TITLE</h1>
-            <button id="changeContent" class="btn btn-gradient">About</button>
-        </div>
-
-        <!-- メイン画面 -->
-        <div id="main_content">
-            <button 
-                id="ar-button" 
-                class="btn btn-gradient"
-                slot="ar-button">
-                <img 
-                    src="./src/ar_icon.png" 
-                    alt="ar icon"
-                    class="btn-icon">
-                <span>ACTIVE AR</span>
-            </button>
-        </div>
-
-        <!-- クリエイター画面 -->
-        <div id="other_content">
-        <!-- 作品概要 -->
-        <div id="introduction">
-            <h1>タイトル</h1>
-            <span>あらすじや作品の紹介文</span>
-        </div>
-        <!-- SNSリンク -->
-        <div id="creators">
-            <div class="profile">
-                <img src="./src/icon_uduki.jpg" class="x_profile_icon" alt="X_icon">
-                <div class="profile-contents">
-                    <span>兎月</span>
-                    <span>イラストレーター</span>
-                    <a class="sns-link-banner" href="https://x.com/uduki15068624">X @uduki</a>
-                    <a class="sns-link-banner" href="https://www.pixiv.net/users/36153766">pixiv</a>
-                </div>
-            </div>
-        </div>
-
-        </div>
-
-        <script>
-            // コンテンツ切り替え
-            // 初期画面ではクリエイターを非表示
-            const main_content = document.querySelector('#main_content');
-            main_content.style.display = 'block';
-            const other_content = document.querySelector('#other_content');
-            other_content.style.display = 'none'
-            const changeContent = document.getElementById('changeContent');
-            changeContent.addEventListener('click', () => {
-                if (main_content.style.display === 'none') {
-                    main_content.style.display = 'block';
-                    other_content.style.display = 'none';
-                } else {
-                    main_content.style.display = 'none';
-                    other_content.style.display = 'block';
-                };
-            });
-
-            // model-viewerが使用できるデバイスか判定
-            const viewer = document.querySelector('model-viewer');
-            const arButton = document.querySelector('#ar-button');
-            if (viewer.canActivateAR) {
-                arButton.disabled = false;
-                arButton.addEventListener('click', () => {
-                    viewer.activateAR();
-                });
-            } else {
-                console.log("Sorry, This device doesnt have AR content available...");
-                arButton.disabled = true;
-            }
-        </script>
-
+        <a-scene 
+            vr-mode-ui='enabled: false' 
+            arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' 
+            renderer='antialias: true; alpha: true'>
+            <a-camera gps-new-camera='gpsMinDistance: 5'></a-camera>
+            <!-- 3Dモデル（gltfファイル） -->
+            <a-assets>
+                <a-asset-items 
+                    id="miku" 
+                    src="./src/miku.glb">
+                </a-asset-items>
+            </a-assets>
+            <a-entity 
+                id="model"
+                gltf-model="#miku"
+                position="1 1 1"
+                animation-mixer="clip: *; timeScale:0; loop: once;"
+                >
+            </a-entity>
+        </a-scene>
     </body>
 </html>
